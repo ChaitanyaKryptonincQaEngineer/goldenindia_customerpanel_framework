@@ -1,0 +1,1 @@
+# qa_customer_panel_automation_framework
