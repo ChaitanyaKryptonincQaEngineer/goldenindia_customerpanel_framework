@@ -1,1 +1,1 @@
-# qa_customer_panel_automation_framework
+goldenindia_customerpanel_framework
