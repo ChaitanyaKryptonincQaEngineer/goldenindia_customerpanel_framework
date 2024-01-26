@@ -1,5 +1,6 @@
 package goldenindia.CustomerPanelNewFramework.PageObjects;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -26,8 +27,9 @@ public class ProductCatelogue extends BoilerPlateCode {
 	@FindBy(xpath = "(//button[@type=\"button\"])[12]")
 	WebElement addToCartBtn;
 
-	public CheckOutPage addingSingleProductToCart(String name) {
-		String newValue = System.getProperty("productName") != null ? System.getProperty("productName") : name;
+	public CheckOutPage addingSingleProductToCart() throws IOException, InterruptedException {
+		String newValue = System.getProperty("productName") != null ? System.getProperty("productName")
+				: gettingValueFromPropertyFile("productName");
 
 		int count = 0;
 		System.out.println("Total Products in Customer Panel are :");
@@ -42,6 +44,12 @@ public class ProductCatelogue extends BoilerPlateCode {
 				scrollingToParticularElementUsingJavascriptExecutor(productName);
 				clickingOnParticularElementUsingJavascriptExecutor(productName);
 				addToCartBtn.click();
+			} else if (productName.getText() != newValue) {
+				scrollingToParticularElementUsingJavascriptExecutor(productName);
+				clickingOnParticularElementUsingJavascriptExecutor(productName);
+				addToCartBtn.click();
+				Thread.sleep(2000);
+				break;
 			}
 		}
 

@@ -2,20 +2,27 @@
 <testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-01-23T20:35:00 IST" name="Default suite" finished-at="2024-01-23T20:35:14 IST" duration-ms="14365">
+  <suite started-at="2024-01-26T20:52:53 IST" name="Default suite" finished-at="2024-01-26T20:53:17 IST" duration-ms="24700">
     <groups>
     </groups>
-    <test started-at="2024-01-23T20:35:00 IST" name="Default test" finished-at="2024-01-23T20:35:14 IST" duration-ms="14365">
+    <test started-at="2024-01-26T20:52:53 IST" name="Default test" finished-at="2024-01-26T20:53:17 IST" duration-ms="24700">
       <class name="goldenindia.CustomerPanelNewFramework.TestCases.OrderingItemsSuccessfully">
-        <test-method is-config="true" signature="launchApplication()[pri:0, instance:goldenindia.CustomerPanelNewFramework.TestCases.OrderingItemsSuccessfully@34e9fd99]" started-at="2024-01-23T20:35:00 IST" name="launchApplication" finished-at="2024-01-23T20:35:07 IST" duration-ms="7127" status="PASS">
+        <test-method is-config="true" signature="launchApplication()[pri:0, instance:goldenindia.CustomerPanelNewFramework.TestCases.OrderingItemsSuccessfully@10683d9d]" started-at="2024-01-26T20:52:53 IST" name="launchApplication" finished-at="2024-01-26T20:52:58 IST" duration-ms="5138" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- launchApplication -->
-        <test-method signature="placing_the_order_by_adding_only_one_product()[pri:0, instance:goldenindia.CustomerPanelNewFramework.TestCases.OrderingItemsSuccessfully@34e9fd99]" started-at="2024-01-23T20:35:07 IST" name="placing_the_order_by_adding_only_one_product" finished-at="2024-01-23T20:35:12 IST" duration-ms="4882" status="PASS">
+        <test-method signature="placing_the_order_by_adding_only_one_product(java.util.HashMap)[pri:0, instance:goldenindia.CustomerPanelNewFramework.TestCases.OrderingItemsSuccessfully@10683d9d]" started-at="2024-01-26T20:52:58 IST" name="placing_the_order_by_adding_only_one_product" data-provider="enteringCustomerDetails" finished-at="2024-01-26T20:53:15 IST" duration-ms="17069" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[{name=Elizabeth, number=7963054851, email=Elizabeth@gmail.com}]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- placing_the_order_by_adding_only_one_product -->
-        <test-method is-config="true" signature="treeDown()[pri:0, instance:goldenindia.CustomerPanelNewFramework.TestCases.OrderingItemsSuccessfully@34e9fd99]" started-at="2024-01-23T20:35:12 IST" name="treeDown" finished-at="2024-01-23T20:35:14 IST" duration-ms="2287" status="PASS">
+        <test-method is-config="true" signature="treeDown()[pri:0, instance:goldenindia.CustomerPanelNewFramework.TestCases.OrderingItemsSuccessfully@10683d9d]" started-at="2024-01-26T20:53:15 IST" name="treeDown" finished-at="2024-01-26T20:53:17 IST" duration-ms="2243" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- treeDown -->
