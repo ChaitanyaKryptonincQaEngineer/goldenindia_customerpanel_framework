@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 
 import goldenindia.CustomerPanelNewFramework.Base.CustomerPanelBaseTest;
 import goldenindia.CustomerPanelNewFramework.PageObjects.CheckOutPage;
+import goldenindia.CustomerPanelNewFramework.PageObjects.ConfirmationPage;
 import goldenindia.CustomerPanelNewFramework.PageObjects.PaymentPage;
 import goldenindia.CustomerPanelNewFramework.PageObjects.ProductCatelogue;
 
@@ -20,7 +21,10 @@ public class OrderingItemsSuccessfully extends CustomerPanelBaseTest {
 		ProductCatelogue productPage = homePage.customerClickingParticularBranch();
 		CheckOutPage checkOutPage = productPage.addingSingleProductToCart();
 		PaymentPage paymentPage = checkOutPage.selectingParticularOrderType();
-		paymentPage.enteringCustomerDetails(input.get("name"), input.get("email"), input.get("number"));
+		ConfirmationPage confirmationPage = paymentPage.completingPaymentDetails(input.get("name"), input.get("email"),
+				input.get("number"));
+		confirmationPage.gettingOrderId();
+		confirmationPage.downloadingOrderPDF();
 
 	}
 

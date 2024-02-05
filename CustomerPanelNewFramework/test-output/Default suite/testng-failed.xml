@@ -7,7 +7,7 @@
         <methods>
           <include name="treeDown"/>
           <include name="launchApplication"/>
-          <include name="placing_the_order_by_adding_only_one_product"/>
+          <include name="placing_the_order_by_adding_only_one_product" invocation-numbers="0"/>
         </methods>
       </class> <!-- goldenindia.CustomerPanelNewFramework.TestCases.OrderingItemsSuccessfully -->
     </classes>

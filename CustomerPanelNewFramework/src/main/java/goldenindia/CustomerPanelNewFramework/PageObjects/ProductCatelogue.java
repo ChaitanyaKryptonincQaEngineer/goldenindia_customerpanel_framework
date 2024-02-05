@@ -31,27 +31,20 @@ public class ProductCatelogue extends BoilerPlateCode {
 		String newValue = System.getProperty("productName") != null ? System.getProperty("productName")
 				: gettingValueFromPropertyFile("productName");
 
-		int count = 0;
-		System.out.println("Total Products in Customer Panel are :");
-		for (WebElement webElement : productNames) {
-			System.out.println(webElement.getText());
-			count += 1;
-		}
-		System.out.println("Total Elements are  " + count);
-
+		System.out.println("Product Name is " + newValue);
 		for (WebElement productName : productNames) {
-			if (productName.getText().contains(newValue)) {
-				scrollingToParticularElementUsingJavascriptExecutor(productName);
-				clickingOnParticularElementUsingJavascriptExecutor(productName);
-				addToCartBtn.click();
-			} else if (productName.getText() != newValue) {
-				scrollingToParticularElementUsingJavascriptExecutor(productName);
-				clickingOnParticularElementUsingJavascriptExecutor(productName);
-				addToCartBtn.click();
-				Thread.sleep(2000);
-				break;
-			}
+		    if (productName.getText().equals(newValue)) {
+		        System.out.println("Both are equal");
+		        scrollingToParticularElementUsingJavascriptExecutor(productName);
+		        clickingOnParticularElementUsingJavascriptExecutor(productName);
+		        addToCartBtn.click();
+		        break;
+		    } else {
+		        scrollingToParticularElementUsingJavascriptExecutor(productNames.get(0));
+		        clickingOnParticularElementUsingJavascriptExecutor(productNames.get(0));
+		    }
 		}
+
 
 		CheckOutPage checkOutPage = new CheckOutPage(driver);
 		return checkOutPage;

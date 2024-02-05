@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -65,6 +67,34 @@ public class CustomerPanelBaseTest {
 				});
 		return data;
 
+	}
+
+	public String takingPageScreenShot(String testCaseName, WebDriver driver) throws IOException {
+
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		File source = ts.getScreenshotAs(OutputType.FILE);
+		File file = new File(System.getProperty("user.dir") + "//Reports//" + testCaseName + ".png");
+
+		FileUtils.copyFile(source, file);
+		return System.getProperty("user.dir") + "//Reports//" + testCaseName + ".png";
+	}
+
+	public void deletePreviousFailureScreenshots(String currentTestCaseName) {
+
+		String reportsFolderPath = System.getProperty("user.dir") + "//Reports//";
+		File reportsFolder = new File(reportsFolderPath);
+
+		if (reportsFolder.exists() && reportsFolder.isDirectory()) {
+			File[] files = reportsFolder.listFiles();
+
+			for (File file : files) {
+				if (file.getName().startsWith(currentTestCaseName) && file.getName().endsWith(".png"))
+					;
+				if (!file.delete()) {
+					System.out.println("Failed to delete file:" + file.getName());
+				}
+			}
+		}
 	}
 
 	@BeforeTest(alwaysRun = true)

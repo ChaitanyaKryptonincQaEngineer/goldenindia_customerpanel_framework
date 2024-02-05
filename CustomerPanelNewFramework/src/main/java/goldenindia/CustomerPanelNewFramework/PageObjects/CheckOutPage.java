@@ -53,7 +53,7 @@ public class CheckOutPage extends BoilerPlateCode {
 			if (orderType.equals("Delivery")) {
 				System.out.println("Order Type is Delivery");
 				enteringDeliveryDetails();
-			} else if (orderType.equals("Pick up")) {
+			} else if (orderType.equals("Pickup")) {
 				System.out.println("Order Type is Pick Up");
 				enteringPickUpDetails();
 			}
@@ -73,13 +73,15 @@ public class CheckOutPage extends BoilerPlateCode {
 				.perform();
 	}
 
-	public void enteringDateAndTime() {
+	public void enteringDateAndTime() throws InterruptedException {
 		// SELECTING THE DATE FROM THE DROP DOWN
 		movingToParticularElementUsingActionClass(dateEntryLabel).click().build().perform();
+		Thread.sleep(1000);
 		movingToParticularElementUsingActionClass(dateEntryLabel).sendKeys(Keys.ENTER).build().perform();
 
 		// SELECTING THE TIME FROM THE DROP DOWN
 		movingToParticularElementUsingActionClass(timeEntryLabel).click().build().perform();
+		Thread.sleep(1000);
 		movingToParticularElementUsingActionClass(timeEntryLabel).sendKeys(Keys.ENTER).build().perform();
 
 	}
@@ -125,9 +127,11 @@ public class CheckOutPage extends BoilerPlateCode {
 		this.gettingMinimumOrderValue();
 	}
 
-	public void enteringPickUpDetails() {
+	public void enteringPickUpDetails() throws InterruptedException {
 		super.clickingOnCartIcon();
 		this.clickingOnPickUp();
+		this.enteringDateAndTime();
+		this.gettingMinimumOrderValue();
 
 	}
 }
