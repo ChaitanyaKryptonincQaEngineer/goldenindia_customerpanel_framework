@@ -102,7 +102,7 @@ public class CustomerPanelBaseTest {
 
 		driver = driverIntialization();
 		homePage = new HomePage(driver);
-		homePage.gotoURL();
+		homePage.navigateToURL();
 		return homePage;
 
 	}

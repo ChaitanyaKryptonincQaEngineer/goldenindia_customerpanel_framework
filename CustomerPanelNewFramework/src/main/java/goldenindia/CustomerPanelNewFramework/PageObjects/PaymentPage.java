@@ -1,3 +1,4 @@
+
 package goldenindia.CustomerPanelNewFramework.PageObjects;
 
 import java.io.IOException;
@@ -10,9 +11,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.locators.RelativeLocator;
 
-import goldenindia.CustomerPanelNewFramework.Utilities.BoilerPlateCode;
+import goldenindia.CustomerPanelNewFramework.Utilities.CommonUtilities;
 
-public class PaymentPage extends BoilerPlateCode {
+public class PaymentPage extends CommonUtilities {
 
 	public WebDriver driver;
 
@@ -62,7 +63,7 @@ public class PaymentPage extends BoilerPlateCode {
 
 		List<WebElement> paymentNames = driver.findElements(By.xpath("//form/div[4]/div[2]/div/div/label"));
 		for (WebElement paymentName : paymentNames) {
-			if (paymentName.getText().equals(gettingValueFromPropertyFile("paymentType"))) {
+			if (paymentName.getText().equals(getValueFromPropertyFile("paymentType"))) {
 				if (!CODPayment.isSelected()) {
 					WebElement paymentSelection = driver.findElement(
 							RelativeLocator.with(By.xpath("//input[@value=\"COD\"]")).toLeftOf(paymentName));
@@ -70,7 +71,7 @@ public class PaymentPage extends BoilerPlateCode {
 
 				}
 				System.out.println("You are using " + paymentName.getText());
-			} else if (paymentName.getText().equals(gettingValueFromPropertyFile("paymentType"))) {
+			} else if (paymentName.getText().equals(getValueFromPropertyFile("paymentType"))) {
 				if (!onlinePayment.isSelected()) {
 					WebElement paymentSelection = driver.findElement(
 							RelativeLocator.with(By.xpath("//input[@value=\"ONLINE\"]")).toLeftOf(paymentName));

@@ -12,54 +12,57 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HomePage {
 
-	WebDriver driver;
+    WebDriver driver;
 
-	public HomePage(WebDriver driver) {
+    // Constructor
+    public HomePage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
 
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
-	}
+    // Locators for branch names
+    @FindBy(css = "[class*=\"header_name\"]")
+    public List<WebElement> branchNameElements;
 
-	@FindBy(css = "[class*=\"header_name\"]")
-	public List<WebElement> branchNameElements;
+    // Locators for order now buttons
+    @FindBy(css = "[class*=\"custom_hover\"]")
+    public List<WebElement> orderNowButtons;
 
-	@FindBy(css = "[class*=\"custom_hover\"]")
-	public List<WebElement> orderNowBtn;
+    // Locator for branch welcome message
+    @FindBy(css = "[class=\"sc-87747fd2-0 bkSLXW\"]")
+    public WebElement branchWelcomeMessage;
 
-	@FindBy(css = "[class=\"sc-87747fd2-0 bkSLXW\"]")
-	public WebElement branchWelcomeMsg;
+    // Method to navigate to a particular branch
+    public ProductCatalog navigateToBranch() throws IOException {
+        try {
+            Properties properties = new Properties();
+            FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir")
+                    + "\\src\\test\\java\\goldenindia\\CustomerPanelNewFramework\\TestData\\customerPanel.properties");
+            properties.load(fileInputStream);
 
-	public ProductCatelogue customerClickingParticularBranch() throws IOException {
+            String selectedBranch = System.getProperty("branch") != null ? System.getProperty("branch")
+                    : properties.getProperty("branch");
 
-		try {
+            for (int i = 0; i < branchNameElements.size(); i++) {
+                if (branchNameElements.get(i).getText().equals(selectedBranch)) {
+                    orderNowButtons.get(i).click();
+                    break;
+                }
+            }
+            System.out.println("Selected Branch: " + selectedBranch);
+        } catch (Exception e) {
+            System.err.println("Error occurred while selecting branch: " + e.getMessage());
+            driver.navigate().refresh();
+            orderNowButtons.get(0).click(); // Clicking on the first order now button as fallback
+        }
+        System.out.println("Branch Welcome Message: " + branchWelcomeMessage.getText());
+        // Initialize and return ProductCatalog page
+        ProductCatalog productCatalogPage = new ProductCatalog(driver);
+        return productCatalogPage;
+    }
 
-			Properties properties = new Properties();
-			FileInputStream fileInputStream = new FileInputStream(System.getProperty("user.dir")
-					+ "\\src\\test\\java\\goldenindia\\CustomerPanelNewFramework\\TestData\\customerPanel.properties");
-			properties.load(fileInputStream);
-
-			String branchName = System.getProperty("branch") != null ? System.getProperty("branch")
-					: properties.getProperty("branch");
-
-			for (int i = 0; i < branchNameElements.size(); i++) {
-				if (branchNameElements.get(i).getText().equals(branchName)) {
-					orderNowBtn.get(i).click();
-					break;
-				}
-			}
-			System.out.println(branchName);
-
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			driver.navigate().refresh();
-			orderNowBtn.get(0).click();
-		}
-		System.out.println(branchWelcomeMsg.getText());
-		ProductCatelogue productPage = new ProductCatelogue(driver);
-		return productPage;
-	}
-
-	public void gotoURL() {
-		driver.get("http://mcd.mypreview.xyz/");
-	}
+    // Method to navigate to the home page URL
+    public void navigateToURL() {
+        driver.get("http://mcd.mypreview.xyz/");
+    }
 }

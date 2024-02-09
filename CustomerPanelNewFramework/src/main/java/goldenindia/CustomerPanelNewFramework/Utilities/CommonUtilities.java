@@ -3,6 +3,7 @@ package goldenindia.CustomerPanelNewFramework.Utilities;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import java.util.Properties;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,37 +14,37 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BoilerPlateCode {
+public class CommonUtilities {
 
 	public WebDriver driver;
 	@FindBy(xpath = "//*[local-name()='svg' and @data-testid='shoppingBag']")
 	WebElement cartIcon;
 
-	public BoilerPlateCode(WebDriver driver) {
+	public CommonUtilities(WebDriver driver) {
 		this.driver = driver;
 	}
 
-	public void scrollingToParticularElementUsingJavascriptExecutor(WebElement ele) {
+	public void scrollToElementUsingJavascript(WebElement ele) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView(true);", ele);
 	}
 
-	public void clickingOnParticularElementUsingJavascriptExecutor(WebElement ele) {
+	public void clickElementUsingJavascript(WebElement ele) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].click()", ele);
 	}
 	
-	public void visibilityOfWebElement(WebElement ele) {
+	public void waitForVisibility(WebElement ele) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 		wait.until(ExpectedConditions.visibilityOf(ele));
 	}
 
-	public void clickingOnCartIcon() {
+	public void clickOnCartIcon() {
 		cartIcon.click();
 
 	}
 
-	public String gettingValueFromPropertyFile(String name) throws IOException {
+	public String getValueFromPropertyFile(String name) throws IOException {
 		String propValue = "";
 		try {
 			Properties properties = new Properties();
@@ -63,5 +64,12 @@ public class BoilerPlateCode {
 		Actions action = new Actions(driver);
 		return action.moveToElement(ele);
 	}
+	
+	public void visibilityOfElements(List<WebElement> ele) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.visibilityOfAllElements(ele));
+	}
+	
+
 
 }

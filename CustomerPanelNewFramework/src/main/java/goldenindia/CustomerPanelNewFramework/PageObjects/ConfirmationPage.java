@@ -7,32 +7,36 @@ import org.openqa.selenium.support.PageFactory;
 
 public class ConfirmationPage {
 
-	public WebDriver driver;
+    public WebDriver driver;
 
-	@FindBy(css = "[class*=\"header_success\"]")
-	WebElement orderConfirmationMsg;
+    // Locator for order confirmation message
+    @FindBy(css = "[class*=\"header_success\"]")
+    WebElement orderConfirmationMessage;
 
-	@FindBy(css = "[class*=\"payment_order_id\"]")
-	WebElement orderID;
+    // Locator for order ID
+    @FindBy(css = "[class*=\"payment_order_id\"]")
+    WebElement orderIDElement;
 
-	@FindBy(xpath = "//button[@type=\"button\"]//strong[text()=\"Download Receipt\"]")
-	WebElement downloadReceiptBtn;
+    // Locator for download receipt button
+    @FindBy(xpath = "//button[@type=\"button\"]//strong[text()=\"Download Receipt\"]")
+    WebElement downloadReceiptButton;
 
-	public ConfirmationPage(WebDriver driver) {
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
-	}
+    // Constructor
+    public ConfirmationPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
 
-	public void gettingOrderId() {
+    // Method to retrieve order ID from the confirmation page
+    public void getOrderID() {
+        String orderConfirmation = orderConfirmationMessage.getText();
+        String[] orderIdArray = orderIDElement.getText().split("#");
+        System.out.println("Order Confirmation Message: " + orderConfirmation);
+        System.out.println("Order ID: " + orderIdArray[1]);
+    }
 
-		String orderConfirmation = orderConfirmationMsg.getText();
-		String arra[] = orderID.getText().split("#");
-		System.out.println(orderConfirmation);
-		System.out.println(arra[1]);
-	}
-
-	public void downloadingOrderPDF() {
-		downloadReceiptBtn.click();
-	}
-
+    // Method to download the order receipt
+    public void downloadOrderReceipt() {
+        downloadReceiptButton.click();
+    }
 }

@@ -11,20 +11,20 @@ import goldenindia.CustomerPanelNewFramework.Base.CustomerPanelBaseTest;
 import goldenindia.CustomerPanelNewFramework.PageObjects.CheckOutPage;
 import goldenindia.CustomerPanelNewFramework.PageObjects.ConfirmationPage;
 import goldenindia.CustomerPanelNewFramework.PageObjects.PaymentPage;
-import goldenindia.CustomerPanelNewFramework.PageObjects.ProductCatelogue;
+import goldenindia.CustomerPanelNewFramework.PageObjects.ProductCatalog;
 
 public class OrderingItemsSuccessfully extends CustomerPanelBaseTest {
 
-	@Test(dataProvider = "enteringCustomerDetails")
+	@Test(dataProvider = "enteringCustomerDetails", groups = "Regression")
 	public void placing_the_order_by_adding_only_one_product(HashMap<String, String> input)
 			throws IOException, InterruptedException {
-		ProductCatelogue productPage = homePage.customerClickingParticularBranch();
-		CheckOutPage checkOutPage = productPage.addingSingleProductToCart();
-		PaymentPage paymentPage = checkOutPage.selectingParticularOrderType();
+		ProductCatalog productPage = homePage.navigateToBranch();
+		CheckOutPage checkOutPage = productPage.addSingleProductToCart();
+		PaymentPage paymentPage = checkOutPage.selectOrderType();
 		ConfirmationPage confirmationPage = paymentPage.completingPaymentDetails(input.get("name"), input.get("email"),
 				input.get("number"));
-		confirmationPage.gettingOrderId();
-		confirmationPage.downloadingOrderPDF();
+		confirmationPage.getOrderID();
+		confirmationPage.downloadOrderReceipt();
 
 	}
 

@@ -10,90 +10,104 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import goldenindia.CustomerPanelNewFramework.Utilities.BoilerPlateCode;
+import goldenindia.CustomerPanelNewFramework.Utilities.CommonUtilities;
 
-public class CheckOutPage extends BoilerPlateCode {
+public class CheckOutPage extends CommonUtilities {
 
 	public WebDriver driver;
 
+	// Locator for delivery order type button
 	@FindBy(xpath = "//button[@type=\"button\" and text()='Delivery']")
 	WebElement deliveryOrderType;
 
+	// Locator for pickup order type button
 	@FindBy(xpath = "//button[@type=\"button\" and text()='Pickup']")
 	WebElement pickUpOrderType;
 
+	// Locator for delivery address input field
 	@FindBy(xpath = "//input[@placeholder=\"Add your address  ... \"]")
-	WebElement deliveryAddressLabel;
+	WebElement deliveryAddressInput;
 
+	// Locator for date entry dropdown
 	@FindBy(id = "react-select-2-placeholder")
-	WebElement dateEntryLabel;
+	WebElement dateEntryDropdown;
 
+	// Locator for time entry dropdown
 	@FindBy(id = "react-select-3-placeholder")
-	WebElement timeEntryLabel;
+	WebElement timeEntryDropdown;
 
+	// Locator for minimum quantity error message
 	@FindBy(css = "[class*=\"alert-danger\"]")
 	WebElement minimumQuantityErrorMessage;
 
+	// Locator for checkout button
 	@FindBy(css = "[class*=\"btn-lg\"]")
-	WebElement checkoutBtn;
+	WebElement checkoutButton;
 
+	// Locator for quantity increase icon
 	@FindBy(xpath = "//*[local-name()=\"svg\" and @data-testid=\"AddCircleOutlineIcon\"]")
 	WebElement quantityIncreaseIcon;
 
+	// Constructor
 	public CheckOutPage(WebDriver driver) {
 		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
-	public PaymentPage selectingParticularOrderType() {
+	// Method to select the order type (delivery/pickup)
+	public PaymentPage selectOrderType() {
 		try {
 			String orderType = System.getProperty("orderType") != null ? System.getProperty("orderType")
-					: gettingValueFromPropertyFile("orderType");
+					: getValueFromPropertyFile("orderType");
 			if (orderType.equals("Delivery")) {
-				System.out.println("Order Type is Delivery");
-				enteringDeliveryDetails();
+				System.out.println("Order Type: Delivery");
+				enterDeliveryDetails();
 			} else if (orderType.equals("Pickup")) {
-				System.out.println("Order Type is Pick Up");
-				enteringPickUpDetails();
+				System.out.println("Order Type: Pick Up");
+				enterPickUpDetails();
 			}
 		} catch (Exception e) {
-
+			// Handle exception
 		}
+		// Initialize and return PaymentPage
 		PaymentPage paymentPage = new PaymentPage(driver);
 		return paymentPage;
 	}
 
-	public void enteringDeliveryAddress() throws IOException, InterruptedException {
+	// Method to enter delivery address
+	public void enterDeliveryAddress() throws IOException, InterruptedException {
 		String deliveryAddress = System.getProperty("deliveryAddress") != null ? System.getProperty("deliveryAddress")
-				: gettingValueFromPropertyFile("deliveryAddress");
-		deliveryAddressLabel.sendKeys(deliveryAddress);
+				: getValueFromPropertyFile("deliveryAddress");
+		deliveryAddressInput.sendKeys(deliveryAddress);
 		Thread.sleep(2000);
-		movingToParticularElementUsingActionClass(deliveryAddressLabel).sendKeys(Keys.DOWN, Keys.ENTER).build()
+		movingToParticularElementUsingActionClass(deliveryAddressInput).sendKeys(Keys.DOWN, Keys.ENTER).build()
 				.perform();
 	}
 
 	public void enteringDateAndTime() throws InterruptedException {
 		// SELECTING THE DATE FROM THE DROP DOWN
-		movingToParticularElementUsingActionClass(dateEntryLabel).click().build().perform();
+		movingToParticularElementUsingActionClass(dateEntryDropdown).click().build().perform();
 		Thread.sleep(1000);
-		movingToParticularElementUsingActionClass(dateEntryLabel).sendKeys(Keys.ENTER).build().perform();
+		movingToParticularElementUsingActionClass(dateEntryDropdown).sendKeys(Keys.ENTER).build().perform();
 
 		// SELECTING THE TIME FROM THE DROP DOWN
-		movingToParticularElementUsingActionClass(timeEntryLabel).click().build().perform();
+		movingToParticularElementUsingActionClass(timeEntryDropdown).click().build().perform();
 		Thread.sleep(1000);
-		movingToParticularElementUsingActionClass(timeEntryLabel).sendKeys(Keys.ENTER).build().perform();
+		movingToParticularElementUsingActionClass(timeEntryDropdown).sendKeys(Keys.ENTER).build().perform();
 
 	}
 
-	public void clickingOnDelivery() {
+	// Method to click on delivery order type
+	public void clickOnDelivery() {
 		deliveryOrderType.click();
 	}
 
-	public void gettingMinimumOrderValue() throws InterruptedException {
+	// Method to retrieve minimum order value
+	public void retrieveMinimumOrderValue() throws InterruptedException {
 		String extractedNumber = "";
-		checkoutBtn.click();
-		super.visibilityOfWebElement(minimumQuantityErrorMessage);
+		checkoutButton.click();
+		waitForVisibility(minimumQuantityErrorMessage);
 		String errorMessage = minimumQuantityErrorMessage.getText();
 		Pattern pattern = Pattern.compile("\\b\\d+\\b");
 		Matcher matcher = pattern.matcher(errorMessage);
@@ -104,34 +118,36 @@ public class CheckOutPage extends BoilerPlateCode {
 			System.out.println("No number found in the message.");
 		}
 
-		if (checkoutBtn.getText().contains(extractedNumber)) {
-			checkoutBtn.click();
+		if (checkoutButton.getText().contains(extractedNumber)) {
+			checkoutButton.click();
 		} else {
-			while (!checkoutBtn.getText().contains(extractedNumber)) {
+			while (!checkoutButton.getText().contains(extractedNumber)) {
 				quantityIncreaseIcon.click();
 				Thread.sleep(1000);
-				checkoutBtn.click();
+				checkoutButton.click();
 			}
 		}
 	}
 
-	public void clickingOnPickUp() {
+	// Method to click on pickup order type
+	public void clickOnPickUp() {
 		pickUpOrderType.click();
 	}
 
-	public void enteringDeliveryDetails() throws IOException, InterruptedException {
-		super.clickingOnCartIcon();
-		this.clickingOnDelivery();
-		this.enteringDeliveryAddress();
-		this.enteringDateAndTime();
-		this.gettingMinimumOrderValue();
+	// Method to enter delivery details
+	public void enterDeliveryDetails() throws IOException, InterruptedException {
+		clickOnCartIcon();
+		clickOnDelivery();
+		enterDeliveryAddress();
+		enteringDateAndTime();
+		retrieveMinimumOrderValue();
 	}
 
-	public void enteringPickUpDetails() throws InterruptedException {
-		super.clickingOnCartIcon();
-		this.clickingOnPickUp();
-		this.enteringDateAndTime();
-		this.gettingMinimumOrderValue();
-
+	// Method to enter pickup details
+	public void enterPickUpDetails() throws InterruptedException {
+		clickOnCartIcon();
+		clickOnPickUp();
+		enteringDateAndTime();
+		retrieveMinimumOrderValue();
 	}
 }
